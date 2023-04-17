@@ -6,20 +6,18 @@ def encrypt(plaintext, key):
 
     Parameters:
         plaintext (str): The plaintext to be encrypted.
-        key (numpy.ndarray): An n x n matrix representing the key of the Hill cipher.
+        key (numpy.ndarray): A 2x2 matrix representing the key of the Hill cipher.
 
     Returns:
         str: The ciphertext resulting from the encryption.
     """
-    n = key.shape[0]
     # Convert the plaintext to a numpy array of integers
     plaintext = np.array([ord(c) - ord('a') for c in plaintext.lower() if c.isalpha()])
     # Pad the plaintext with zeros if necessary
-    if len(plaintext) % n != 0:
-        num_pad = n - len(plaintext) % n
-        plaintext = np.append(plaintext, [0] * num_pad)
+    if len(plaintext) % 2 != 0:
+        plaintext = np.append(plaintext, [0])
     # Reshape the plaintext as a matrix of column vectors
-    plaintext = plaintext.reshape(-1, n)
+    plaintext = plaintext.reshape(-1, 2)
     # Apply the Hill cipher encryption formula
     ciphertext = np.dot(plaintext, key) % 26
     # Convert the ciphertext to a string of letters
@@ -32,16 +30,15 @@ def decrypt(ciphertext, key):
 
     Parameters:
         ciphertext (str): The ciphertext to be decrypted.
-        key (numpy.ndarray): An n x n matrix representing the key of the Hill cipher.
+        key (numpy.ndarray): A 2x2 matrix representing the key of the Hill cipher.
 
     Returns:
         str: The plaintext resulting from the decryption.
     """
-    n = key.shape[0]
     # Convert the ciphertext to a numpy array of integers
     ciphertext = np.array([ord(c) - ord('a') for c in ciphertext.lower() if c.isalpha()])
     # Reshape the ciphertext as a matrix of column vectors
-    ciphertext = ciphertext.reshape(-1, n)
+    ciphertext = ciphertext.reshape(-1, 2)
     # Compute the inverse of the key matrix
     key_inv = np.linalg.inv(key)
     # Apply the Hill cipher decryption formula
