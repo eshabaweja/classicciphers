@@ -1,7 +1,7 @@
-# a demo using caesar cipher
-from classicciphers import caesar, playfair
-import numpy as np
+from classicciphers import caesar, playfair, vigenere, railfence
 
+# a demo using caesar cipher
+print("\nA demo using caesar cipher.")
 plaintext = "HELLO WORLD"
 key = 5
 
@@ -14,15 +14,35 @@ print("Ciphertext: ",decrypted_plaintext)
 #################################    #################################
 
 # demo for playfair
+print("\nA demo for playfair")
 # Set up the key and plaintext
 key = "secret"
 plaintext = "MEETMEATTHEPARK"
 
-# Encrypt the plaintext
 ciphertext = playfair.encrypt(key, plaintext)
 print(f"Plaintext: {plaintext}")
 print(f"Ciphertext: {ciphertext}")
-
-# Decrypt the ciphertext
 decrypted_plaintext = playfair.encrypt(key,ciphertext,False)
 print(f"Decrypted plaintext:{decrypted_plaintext}")
+
+
+#################################    #################################
+
+# demo for vignere
+print("\nA demo for Vignere")
+print(f"Plaintext: {plaintext}")
+ciphertext = vigenere.encrypt(plaintext, key)
+print(f"Ciphertext: {ciphertext}")
+print(f"Decrypted plaintext:{vigenere.decrypt(ciphertext, key)}")
+
+
+#################################    #################################
+
+# demo for railfence
+print("\nA demo for Railfence")
+message = "hello world"
+key = 3
+print(f"Plaintext: {message}")
+ciphertext = railfence.encrypt(message, key)
+print(f"Ciphertext: {ciphertext}")
+print(f"Decrypted plaintext:{railfence.decrypt(ciphertext, key)}")
